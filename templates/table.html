@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabela</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        td input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        td button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .save-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .save-button input[type="submit"] {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tabela</h1>
+    <table>
+        <tr>
+            {% for column in table.columns %}
+                <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in table.iterrows() %}
+            <tr>
+                {% for value in row[1] %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+                <td><button onclick="editRow(this)">Editar</button></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="save-button">
+        <form action="/save" method="post">
+            <input type="submit" value="Salvar">
+        </form>
+    </div>
+
+    <script>
+        function editRow(button) {
+            var row = button.parentNode.parentNode;
+            var rowIndex = row.rowIndex - 1;
+            var cells = row.cells;
+
+            for (var i = 0; i < cells.length - 1; i++) {
+                var cell = cells[i];
+                var value = cell.textContent.trim();
+                cell.innerHTML = '<input type="text" value="' + value + '">';
+            }
+
+            var saveButton = row.querySelector('.save-button');
+            if (!saveButton) {
+                var saveButtonHtml = '<div class="save-button"><button onclick="saveRow(this)">Salvar</button></div>';
+                row.insertAdjacentHTML('beforeend', saveButtonHtml);
+            }
+        }
+
+        function saveRow(button) {
+            var row = button.parentNode.parentNode;
+            var cells = row.cells;
+
+            for (var i = 0; i < cells.length - 1; i++) {
+                var cell = cells[i];
+                var input = cell.querySelector('input[type="text"]');
+                cell.textContent = input.value;
+            }
+
+            button.parentNode.remove();
+        }
+    </script>
+</body>
+</html>

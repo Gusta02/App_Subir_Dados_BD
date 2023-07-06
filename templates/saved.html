@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Salvo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .save-message {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .save-message p {
+            font-size: 18px;
+        }
+        .save-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .save-button input[type="submit"] {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Salvo</h1>
+    <div class="save-message">
+        <p>Planilha salva com sucesso!</p>
+    </div>
+    <div class="save-button">
+        <form action="/upload_db" method="post">
+            <input type="submit" value="Subir no Banco de Dados">
+        </form>
+    </div>
+</body>
+</html>
